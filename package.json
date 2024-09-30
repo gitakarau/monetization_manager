@@ -1,0 +1,14 @@
+{
+    "name": "com.akarau.monetizationmanager",
+    "version": "1.0.0",
+    "displayName": "Monetization Manager",
+    "description": "Monetization Manager",
+    "unity": "2022.1",
+    "dependencies": {
+    },
+    "keywords": [
+        "Monetization",
+        "Manager",
+        "keys"
+    ]
+}
