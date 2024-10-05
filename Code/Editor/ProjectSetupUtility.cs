@@ -1,6 +1,4 @@
 #if UNITY_EDITOR
-using System.IO;
-
 using UnityEditor;
 using UnityEditor.Android;
 using UnityEditor.iOS;
@@ -24,15 +22,6 @@ public class ProjectSetupUtility : EditorWindow
     {
         GUILayout.Label(PlayerSettings.applicationIdentifier);
         GUILayout.Space(10);
-
-        SDKUpdateGUI();
-        GUILayout.Space(10);
-
-        if (Keys == null)
-        {
-            GUILayout.Label("Keys object is null...");
-            return;
-        }
 
         SetupBundleVersion();
         GUILayout.Space(10);
@@ -200,66 +189,6 @@ public class ProjectSetupUtility : EditorWindow
         }
 
         PlayerSettings.SetPlatformIcons(platform, kind, icons);
-    }
-
-    private void SDKUpdateGUI()
-    {
-        GUILayout.Label("SDK Update");
-
-        if (GUILayout.Button("Create assemblies"))
-        {
-            CreateAssemblyDefinition("ROAS/Scripts", "ROAS.Runtime", "MaxSdk.Scripts");
-            CreateAssemblyDefinition("Tenjin/Scripts", "Tenjin.Runtime", "MaxSdk.Scripts");
-            CreateAssemblyDefinition("Tenjin/Scripts/Editor", "Tenjin.Editor");
-        }
-    }
-
-    private void CreateAssemblyDefinition(string folderName, string assemblyName, params string[] references)
-    {
-        string folderPath = $"Assets/{folderName}";
-
-        if (!AssetDatabase.IsValidFolder(folderPath))
-        {
-            Debug.LogError("Folder not found: " + folderPath);
-            return;
-        }
-
-        string asmdefPath = Path.Combine(folderPath, $"{assemblyName}.asmdef");
-
-        if (File.Exists(asmdefPath))
-        {
-            return;
-        }
-
-        string referencesJson = "";
-        for (int i = 0; i < references.Length; i++)
-        {
-            referencesJson += $"\"{references[i]}\"";
-            if (i < references.Length - 1)
-            {
-                referencesJson += ", ";
-            }
-        }
-
-        string asmdefContent = $@"
-        {{
-            ""name"": ""{assemblyName}"",
-            ""references"": [
-                {referencesJson}
-            ],
-            ""includePlatforms"": [],
-            ""excludePlatforms"": [],
-            ""allowUnsafeCode"": false,
-            ""overrideReferences"": false,
-            ""precompiledReferences"": [],
-            ""autoReferenced"": true,
-            ""defineConstraints"": [],
-            ""versionDefines"": [],
-            ""noEngineReferences"": false
-        }}";
-
-        File.WriteAllText(asmdefPath, asmdefContent);
-        AssetDatabase.Refresh();
     }
 }
 #endif
