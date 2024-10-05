@@ -1,0 +1,19 @@
+{
+    "name": "MM.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "Tenjin.Runtime",
+        "MaxSdk.Scripts",
+        "Unity.TextMeshPro",
+        "ROAS.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
