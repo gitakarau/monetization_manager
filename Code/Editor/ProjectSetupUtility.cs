@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+using AppLovinMax.Scripts.IntegrationManager.Editor;
+
 using UnityEditor;
 using UnityEditor.Android;
 using UnityEditor.iOS;
@@ -94,15 +96,15 @@ public class ProjectSetupUtility : EditorWindow
 
         AppLovinSettings.Instance.QualityServiceEnabled = false;
 
-        AppLovinSettings.Instance.ConsentFlowEnabled = true;
-        AppLovinSettings.Instance.ConsentFlowPrivacyPolicyUrl = Keys.privacy_policy;
-        AppLovinSettings.Instance.ConsentFlowTermsOfServiceUrl = Keys.terms_of_service;
+        AppLovinInternalSettings.Instance.ConsentFlowEnabled = true;
+        AppLovinInternalSettings.Instance.ConsentFlowPrivacyPolicyUrl = Keys.privacy_policy;
+        AppLovinInternalSettings.Instance.ConsentFlowTermsOfServiceUrl = Keys.terms_of_service;
 
-        AppLovinSettings.Instance.UserTrackingUsageLocalizationEnabled = true;
+        AppLovinInternalSettings.Instance.UserTrackingUsageLocalizationEnabled = true;
 
         AppLovinSettings.Instance.SetAttributionReportEndpoint = true;
 
-        EditorUtility.DisplayDialog("Project Setup", "Applovin setuped", "OK");
+        EditorUtility.DisplayDialog("Project Setup", "Applovin is set up", "OK");
     }
 
     private void SetupIcon()
