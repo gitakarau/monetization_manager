@@ -1,0 +1,8 @@
+Установка:
+1) Установить: через package manager, нажать +, git url, https://github.com/gitakarau/monetization_manager.git
+2) Перезапустить Unity (ошибки - ignore)
+3) Tools/Update SDK
+
+Обновление:
+Monetization Manager - через package manager - update
+SDK - обновить SDK, а потом Tools/Update SDK
