@@ -1,12 +1,12 @@
 {
-    "name": "NewAssembly",
+    "name": "Updater",
     "rootNamespace": "",
-    "references": [
-        "Unity.TextMeshPro"
+    "references": [],
+    "includePlatforms": [
+        "Editor"
     ],
-    "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
