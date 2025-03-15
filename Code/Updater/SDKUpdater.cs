@@ -44,11 +44,6 @@ namespace Test
 
             string asmdefPath = Path.Combine(folderPath, $"{assemblyName}.asmdef");
 
-            if (File.Exists(asmdefPath))
-            {
-                return;
-            }
-
             string referencesJson = "";
             for (int i = 0; i < references.Length; i++)
             {
@@ -59,13 +54,20 @@ namespace Test
                 }
             }
 
+            string platforms = "[]";
+
+            if (assemblyName.Contains("Editor"))
+            {
+                platforms = "[\"Editor\"]";
+            }
+
             string asmdefContent = $@"
         {{
             ""name"": ""{assemblyName}"",
             ""references"": [
                 {referencesJson}
             ],
-            ""includePlatforms"": [],
+            ""includePlatforms"": {platforms},
             ""excludePlatforms"": [],
             ""allowUnsafeCode"": false,
             ""overrideReferences"": false,

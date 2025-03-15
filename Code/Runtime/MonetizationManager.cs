@@ -293,9 +293,9 @@ public class MonetizationManager : MonoBehaviour
         MBridgeRevenueParamsEntity mBridgeRevenueParamsEntity = new MBridgeRevenueParamsEntity(MBridgeRevenueParamsEntity.ATTRIBUTION_PLATFORM_TENJIN, tenjinuserId);
 
         // adInfo: a instance of MaxSdkBase.AdInfo
-        #if MAX
+#if MAX
         mBridgeRevenueParamsEntity.SetMaxAdInfo(adInfo);
-        #endif
+#endif
         MBridgeRevenueManager.Track(mBridgeRevenueParamsEntity);
 
     }
