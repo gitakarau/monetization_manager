@@ -9,10 +9,10 @@ namespace Test
 {
     public class SDKUpdater : EditorWindow
     {
-        [MenuItem("Tools/SDK Updater")]
+        [MenuItem("Tools/Monetization Manager Updater")]
         public static void Open()
         {
-            var window = EditorWindow.GetWindow<SDKUpdater>();
+            var window = EditorWindow.GetWindow<SDKUpdater>("Monetization Manager Updater");
             window.Show();
         }
 
@@ -24,9 +24,7 @@ namespace Test
 
         private void SDKUpdateGUI()
         {
-            GUILayout.Label("SDK Update");
-
-            if (GUILayout.Button("Create assemblies"))
+            if (GUILayout.Button("Click here"))
             {
                 CreateAssemblyDefinition("ROAS/Scripts", "ROAS.Runtime", "MaxSdk.Scripts");
                 CreateAssemblyDefinition("Tenjin/Scripts", "Tenjin.Runtime", "MaxSdk.Scripts");
