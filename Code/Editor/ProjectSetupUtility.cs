@@ -39,11 +39,15 @@ public class ProjectSetupUtility : EditorWindow
 
         GUILayout.Space(10);
 
+        SetupKeys();
+
+        GUILayout.Space(10);
+
         SetupTitle();
 
         GUILayout.Space(10);
 
-        SetupKeys();
+        SetupKeystore();
 
         GUILayout.Space(10);
     }
@@ -138,6 +142,11 @@ public class ProjectSetupUtility : EditorWindow
 
     private void SetupTitle()
     {
+        if (Keys == null)
+        {
+            return;
+        }
+
         GUILayout.Label("Titles", EditorStyles.boldLabel);
 
         GUILayout.BeginHorizontal();
@@ -164,6 +173,57 @@ public class ProjectSetupUtility : EditorWindow
     private void SetupKeys()
     {
         GUILayout.Label("Keys", EditorStyles.boldLabel);
+        var keysPath = "Assets/Resources/keys.asset";
+
+        if (Keys == null)
+        {
+            if (GUILayout.Button("Create keys"))
+            {
+
+                if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                {
+                    AssetDatabase.CreateFolder("Assets", "Resources");
+                }
+
+                KeysTemplate asset = CreateInstance<KeysTemplate>();
+                AssetDatabase.CreateAsset(asset, keysPath);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+
+            return;
+        }
+        else
+        {
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.ObjectField("keys", Keys, typeof(KeysTemplate), false);
+            EditorGUI.EndDisabledGroup();
+
+            if (GUILayout.Button("Delete Keys"))
+            {
+                if (EditorUtility.DisplayDialog("Sure?", "Delete keys?", "Yes", "Cancel"))
+                {
+                    if (AssetDatabase.LoadAssetAtPath<KeysTemplate>(keysPath) != null)
+                    {
+                        AssetDatabase.DeleteAsset(keysPath);
+                        AssetDatabase.SaveAssets();
+                        AssetDatabase.Refresh();
+                    }
+
+                    return;
+                }
+            }
+        }
+    }
+
+    private void SetupKeystore()
+    {
+        if (Keys == null)
+        {
+            return;
+        }
+
+        GUILayout.Label("Keytore", EditorStyles.boldLabel);
 
         GUILayout.BeginHorizontal();
         GUILayout.Label($"keys' keystore password: {Keys.keystore_password}");
@@ -173,7 +233,7 @@ public class ProjectSetupUtility : EditorWindow
         GUILayout.Label($"keys' keys password: {Keys.key_password}");
         GUILayout.EndHorizontal();
 
-        if (GUILayout.Button("Update keys"))
+        if (GUILayout.Button("Update keystore keys"))
         {
             PlayerSettings.Android.useCustomKeystore = true;
             PlayerSettings.keystorePass = Keys.keystore_password;

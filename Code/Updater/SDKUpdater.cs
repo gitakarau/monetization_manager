@@ -24,7 +24,7 @@ namespace Test
 
         private void SDKUpdateGUI()
         {
-            if (GUILayout.Button("Click here"))
+            if (GUILayout.Button("Click here after SDK update"))
             {
                 CreateAssemblyDefinition("ROAS/Scripts", "ROAS.Runtime", "MaxSdk.Scripts");
                 CreateAssemblyDefinition("Tenjin/Scripts", "Tenjin.Runtime", "MaxSdk.Scripts");

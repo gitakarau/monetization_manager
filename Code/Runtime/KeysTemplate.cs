@@ -7,8 +7,12 @@ public class KeysTemplate : ScriptableObject
     public string app_bundle_id = "";
     public string app_name = "";
     public string app_company_name = "";
+
+#if UNITY_EDITOR
+    [Header("Keystore (Visible only in Unity)")]
     public string keystore_password = "";
     public string key_password = "";
+#endif
 
     [Header("mtg")]
     public string mtgAppKey = "";

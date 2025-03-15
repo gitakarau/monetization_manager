@@ -1,8 +1,13 @@
 Установка:
 1) Установить: через package manager, нажать +, git url, https://github.com/gitakarau/monetization_manager.git
 2) Перезапустить Unity (ошибки - ignore)
-3) Tools/Monetization Manager Updater
+3) Tools/Monetization Manager Updater -> нажать кнопку
+4) Установка keys: Tools/Setup Projects -> Create Keys. Будет указан файл keys, в нём заполнить нужные поля (притемнённый файл, кликнуть на него)
 
 Обновление:
 Monetization Manager - через package manager - update
 SDK - обновить SDK, а потом Tools/Monetization Manager Updater
+
+Удаление:
+1) Tools/Setup Project -> Delete Keys
+2) Удалить через Package Manager
