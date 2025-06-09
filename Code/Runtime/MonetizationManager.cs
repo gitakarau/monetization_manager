@@ -306,7 +306,6 @@ public class MonetizationManager : MonoBehaviour
     {
         if (!IsConnectedToNetwork())
         {
-            ShowNoConnectionPopUp();
             OnLostConnection?.Invoke();
             return;
         }
@@ -361,42 +360,6 @@ public class MonetizationManager : MonoBehaviour
     }
 
     #endregion
-
-    #region No Connection
-
-    [SerializeField] private GameObject _panelNoConnectionPopUp;
-
-    private bool _isOpenedNoConnectionPopUp;
-
-    void Update()
-    {
-        if (_isOpenedNoConnectionPopUp)
-        {
-            if (IsConnectedToNetwork())
-            {
-                HideNoConnectionPopUp();
-            }
-        }
-    }
-
-    private void ShowNoConnectionPopUp()
-    {
-        _isOpenedNoConnectionPopUp = true;
-        _panelNoConnectionPopUp.SetActive(true);
-        Time.timeScale = 0.0f;
-    }
-
-    private void HideNoConnectionPopUp()
-    {
-        _isOpenedNoConnectionPopUp = false;
-        _panelNoConnectionPopUp.SetActive(false);
-        Time.timeScale = 1.0f;
-    }
-
-
-    #endregion
-
-
 
 
     private IEnumerator ShowInterstitialWithDelay()
@@ -514,7 +477,7 @@ public class MonetizationManager : MonoBehaviour
     {
         if (IsConnectedToNetwork() == false)
         {
-            ShowNoConnectionPopUp();
+            OnLostConnection?.Invoke();
             return;
         }
         try
