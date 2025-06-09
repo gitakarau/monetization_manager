@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class NoConnectionPopup : MonoBehaviour
 {
-    #if MAX
     public bool IsOpened { get; private set; }
 
     private void Update()
@@ -56,5 +55,4 @@ public class NoConnectionPopup : MonoBehaviour
     {
         MonetizationManager.OnLostConnection?.RemoveListener(OnLostConnection);
     }
-    #endif
 }
