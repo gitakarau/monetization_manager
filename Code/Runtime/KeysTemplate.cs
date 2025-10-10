@@ -43,14 +43,24 @@ public class KeysTemplate : ScriptableObject
     [Header("Admob")]
     public string admob_app_id_android = "";
     public string admob_app_id_ios = "";
+        
+    [Header("MRec + Banner")]
+    public bool ShowBannerOnStart = true;
+    public string MRecAdId_android = "";
+    public string MRecAdId_ios = "";
+    public string BannerAdId_android = "";
+    public string BannerAdId_ios = "";
 
 #if UNITY_IOS
     public string ApplovinMax_InterstitialUnitId { get => ApplovinMax_InterstitialUnitId_ios; }
     public string ApplovinMax_RewardedUnitId { get => ApplovinMax_RewardedUnitId_ios; } 
+    public string MRecAdId { get => MRecAdId_ios; }
+    public string BannerAdId { get => BannerAdId_ios; }
 #else
     public string ApplovinMax_InterstitialUnitId { get => ApplovinMax_InterstitialUnitId_android; }
     public string ApplovinMax_RewardedUnitId { get => ApplovinMax_RewardedUnitId_android; }
-
+    public string MRecAdId { get => MRecAdId_android; }
+    public string BannerAdId { get => BannerAdId_android; }
 #endif
 
     public string privacy_policy { get; } = "https://akarau.com/privacypolicy.html";

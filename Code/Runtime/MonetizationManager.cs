@@ -32,6 +32,10 @@ public class MonetizationManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
+        _contentTimer.gameObject.SetActive(false);
+        m_MRecContent.gameObject.SetActive(false);
+        m_CloseMRecButton.onClick?.AddListener(OnClickCloseMRec);
 
         Instance = this;
         DontDestroyOnLoad(this);
@@ -175,6 +179,9 @@ public class MonetizationManager : MonoBehaviour
             TenjinConnect();
 #endif
             InitializeInterstitialAds();
+            InitializeBannerAds();
+            InitializeMRecAds();
+            
             //InitializeRewardedAds();
             //InitializeBannerAds();
             //InitializeMRecAds();
@@ -207,6 +214,99 @@ public class MonetizationManager : MonoBehaviour
 
         return Application.internetReachability != NetworkReachability.NotReachable;
     }
+    
+    public void ShowHideBanner(bool isShow)
+    {
+        if (isShow)
+        {
+            MaxSdk.ShowBanner(Keys.BannerAdId);
+        }
+        else
+        {
+            MaxSdk.HideBanner(Keys.BannerAdId);
+        }
+    }
+
+    public void ShowHideMRec(bool isShow)
+    {
+        if (isShow)
+        {
+            if (!m_IsMRecReady)
+            {
+                return;
+            }
+            
+            m_MRecContent.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+
+            m_IsMRecReady = false;
+            MaxSdk.ShowMRec(Keys.MRecAdId);
+        }
+        else
+        {
+            m_MRecContent.gameObject.SetActive(false);
+
+            m_IsMRecReady = false;
+            Time.timeScale = 1.0f;
+            MaxSdk.HideMRec(Keys.MRecAdId);
+            MaxSdk.LoadMRec(Keys.MRecAdId);
+        }
+    }
+    
+    public void InitializeBannerAds()
+    {
+        MaxSdk.SetBannerPlacement(Keys.BannerAdId, "version " + Application.version);
+        MaxSdk.CreateBanner(Keys.BannerAdId, MaxSdkBase.BannerPosition.BottomCenter);
+        
+        MaxSdkCallbacks.Banner.OnAdLoadedEvent += OnBannedAdLoadedEvent;
+
+    }
+    
+    public void OnBannedAdLoadedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
+    {
+        if (Keys.ShowBannerOnStart && !m_IsBannerShowed)
+        {
+            ShowHideBanner(true);
+        }
+        
+        m_IsBannerShowed = true;
+    }
+    
+    public void InitializeMRecAds()
+    {
+        MaxSdk.SetMRecPlacement(Keys.MRecAdId, "version " + Application.version);
+        MaxSdk.CreateMRec(Keys.MRecAdId, MaxSdkBase.AdViewPosition.Centered);
+        MaxSdk.StopMRecAutoRefresh(Keys.MRecAdId);
+        
+        MaxSdkCallbacks.MRec.OnAdLoadedEvent      += OnMRecAdLoadedEvent;
+        MaxSdkCallbacks.MRec.OnAdLoadFailedEvent  += OnMRecAdLoadFailedEvent;
+        MaxSdkCallbacks.MRec.OnAdClickedEvent     += OnMRecAdClickedEvent;
+    }
+
+    private bool m_IsMRecReady;
+    private bool m_IsBannerShowed;
+
+    public void OnMRecAdLoadedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
+    {
+        m_IsMRecReady = true;
+    }
+
+    public void OnMRecAdLoadFailedEvent(string adUnitId, MaxSdk.ErrorInfo error)
+    {
+        m_IsMRecReady = false;
+        
+        MaxSdk.LoadMRec(Keys.MRecAdId);
+    }
+
+    public void OnMRecAdClickedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
+    {
+        ShowHideMRec(false);
+    }
+    
+    private void OnClickCloseMRec()
+    {
+        ShowHideMRec(false);
+    }
 
     public void InitializeInterstitialAds()
     {
@@ -233,7 +333,7 @@ public class MonetizationManager : MonoBehaviour
     {
         if (isGameLaunched)
         {
-            ShowInterstitialOnTimer();
+            // ShowInterstitialOnTimer();
             isGameLaunched = false;
         }
         // Interstitial ad is ready for you to show. MaxSdk.IsInterstitialReady(InterstitialUnitId) now returns 'true'
@@ -331,7 +431,9 @@ public class MonetizationManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTimer;
     [SerializeField] private Image _progressTimer;
     [SerializeField] private float _timeAds;
-
+    [SerializeField] private RectTransform m_MRecContent;
+    [SerializeField] private Button m_CloseMRecButton;
+    
     public void ShowInterstitialOnTimer()
     {
         StartCoroutine(WaitToShowInterstitial());
@@ -580,6 +682,8 @@ public class MonetizationManager : MonoBehaviour
 
 
 
-
-
+    private void OnDestroy()
+    {
+        m_CloseMRecButton.onClick?.RemoveListener(OnClickCloseMRec);
+    }
 }
