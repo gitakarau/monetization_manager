@@ -33,7 +33,6 @@ public class MonetizationManager : MonoBehaviour
             return;
         }
         
-        _contentTimer.gameObject.SetActive(false);
         m_MRecContent.gameObject.SetActive(false);
         m_MRecContent.anchoredPosition = Vector2.zero;
         m_CloseMRecButton.onClick?.AddListener(OnClickCloseMRec);
@@ -428,40 +427,9 @@ public class MonetizationManager : MonoBehaviour
 
     #region ShowInterstitialOnTimer
 
-    [SerializeField] private GameObject _contentTimer;
-    [SerializeField] private TextMeshProUGUI _textTimer;
-    [SerializeField] private Image _progressTimer;
-    [SerializeField] private float _timeAds;
     [SerializeField] private RectTransform m_MRecContent;
     [SerializeField] private Button m_CloseMRecButton;
     
-    public void ShowInterstitialOnTimer()
-    {
-        StartCoroutine(WaitToShowInterstitial());
-    }
-
-    private IEnumerator WaitToShowInterstitial()
-    {
-        _contentTimer.SetActive(true);
-        var progress = _timeAds + 1f;
-        while (progress > 1f)
-        {
-            progress -= Time.smoothDeltaTime;
-            SetValue(progress, (progress - 1f) / _timeAds);
-            yield return null;
-        }
-
-        _contentTimer.SetActive(false);
-        ShowInterstitial();
-    }
-
-    public void SetValue(float value, float progress)
-    {
-        var time = TimeSpan.FromSeconds(value);
-        _progressTimer.fillAmount = progress;
-        _textTimer.text = $"{Mathf.CeilToInt(time.Seconds)}";
-    }
-
     #endregion
 
 
@@ -499,7 +467,7 @@ public class MonetizationManager : MonoBehaviour
 
     public void OnButtonPressShowInterstitialInitialization()
     {
-        FirstButton.onClick.AddListener(delegate { if (isGameLaunched) { ShowInterstitialOnTimer(); isGameLaunched = false; } });
+        FirstButton.onClick.AddListener(delegate { if (isGameLaunched) { isGameLaunched = false; } });
 
     }
 
