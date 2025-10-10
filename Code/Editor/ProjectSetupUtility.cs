@@ -103,7 +103,6 @@ public class ProjectSetupUtility : EditorWindow
         AppLovinInternalSettings.Instance.ConsentFlowEnabled = true;
         AppLovinInternalSettings.Instance.ConsentFlowPrivacyPolicyUrl = Keys.privacy_policy;
         AppLovinInternalSettings.Instance.ConsentFlowTermsOfServiceUrl = Keys.terms_of_service;
-        AppLovinInternalSettings.Instance.ShouldShowTermsAndPrivacyPolicyAlertInGDPR = true;
         AppLovinInternalSettings.Instance.OverrideDefaultUserTrackingUsageDescriptions = true;
 
         AppLovinInternalSettings.Instance.UserTrackingUsageLocalizationEnabled = true;
