@@ -35,6 +35,7 @@ public class MonetizationManager : MonoBehaviour
         
         _contentTimer.gameObject.SetActive(false);
         m_MRecContent.gameObject.SetActive(false);
+        m_MRecContent.anchoredPosition = Vector2.zero;
         m_CloseMRecButton.onClick?.AddListener(OnClickCloseMRec);
 
         Instance = this;
