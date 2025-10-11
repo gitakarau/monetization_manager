@@ -259,6 +259,7 @@ public class MonetizationManager : MonoBehaviour
         MaxSdk.CreateBanner(Keys.BannerAdId, MaxSdkBase.BannerPosition.BottomCenter);
         
         MaxSdkCallbacks.Banner.OnAdLoadedEvent += OnBannedAdLoadedEvent;
+	MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent += OnBannerAdRevenuePaidEvent;
 
     }
     
@@ -281,6 +282,7 @@ public class MonetizationManager : MonoBehaviour
         MaxSdkCallbacks.MRec.OnAdLoadedEvent      += OnMRecAdLoadedEvent;
         MaxSdkCallbacks.MRec.OnAdLoadFailedEvent  += OnMRecAdLoadFailedEvent;
         MaxSdkCallbacks.MRec.OnAdClickedEvent     += OnMRecAdClickedEvent;
+	MaxSdkCallbacks.MRec.OnAdRevenuePaidEvent += OnMRecAdRevenuePaidEvent;
     }
 
     private bool m_IsMRecReady;
@@ -307,6 +309,25 @@ public class MonetizationManager : MonoBehaviour
     {
         ShowHideMRec(false);
     }
+
+
+
+    void OnMRecAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+    {
+        MBridgeRevenueParamsEntity mBridgeRevenueParamsEntity = new MBridgeRevenueParamsEntity(MBridgeRevenueParamsEntity.ATTRIBUTION_PLATFORM_TENJIN, tenjinuserId);
+        mBridgeRevenueParamsEntity.SetMaxAdInfo(adInfo);
+        MBridgeRevenueManager.Track(mBridgeRevenueParamsEntity);
+
+    }
+
+    private void OnBannerAdRevenuePaidEvent(string adUnitId, MaxSdk.AdInfo adInfo)
+    { 
+         MBridgeRevenueParamsEntity mBridgeRevenueParamsEntity = new MBridgeRevenueParamsEntity(MBridgeRevenueParamsEntity.ATTRIBUTION_PLATFORM_TENJIN, tenjinuserId);
+        mBridgeRevenueParamsEntity.SetMaxAdInfo(adInfo);
+        MBridgeRevenueManager.Track(mBridgeRevenueParamsEntity);
+    }
+
+
 
     public void InitializeInterstitialAds()
     {
