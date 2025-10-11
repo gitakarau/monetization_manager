@@ -312,10 +312,13 @@ public class MonetizationManager : MonoBehaviour
 
 
 
+
     void OnMRecAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
     {
         MBridgeRevenueParamsEntity mBridgeRevenueParamsEntity = new MBridgeRevenueParamsEntity(MBridgeRevenueParamsEntity.ATTRIBUTION_PLATFORM_TENJIN, tenjinuserId);
+        #if MAX
         mBridgeRevenueParamsEntity.SetMaxAdInfo(adInfo);
+        #endif
         MBridgeRevenueManager.Track(mBridgeRevenueParamsEntity);
 
     }
@@ -323,7 +326,9 @@ public class MonetizationManager : MonoBehaviour
     private void OnBannerAdRevenuePaidEvent(string adUnitId, MaxSdk.AdInfo adInfo)
     { 
          MBridgeRevenueParamsEntity mBridgeRevenueParamsEntity = new MBridgeRevenueParamsEntity(MBridgeRevenueParamsEntity.ATTRIBUTION_PLATFORM_TENJIN, tenjinuserId);
+        #if MAX
         mBridgeRevenueParamsEntity.SetMaxAdInfo(adInfo);
+        #endif
         MBridgeRevenueManager.Track(mBridgeRevenueParamsEntity);
     }
 
