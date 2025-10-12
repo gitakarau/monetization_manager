@@ -179,8 +179,16 @@ public class MonetizationManager : MonoBehaviour
             TenjinConnect();
 #endif
             InitializeInterstitialAds();
-            InitializeBannerAds();
-            InitializeMRecAds();
+
+            if (Keys.InitializeBanner)
+            {
+                InitializeBannerAds();
+            }
+
+            if (Keys.InitializeMRec)
+            {
+                InitializeMRecAds();
+            }
             
             //InitializeRewardedAds();
             //InitializeBannerAds();

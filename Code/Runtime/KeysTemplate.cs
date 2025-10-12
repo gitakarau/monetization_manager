@@ -45,11 +45,13 @@ public class KeysTemplate : ScriptableObject
     public string admob_app_id_ios = "";
         
     [Header("MRec + Banner")]
-    public bool ShowBannerOnStart = true;
+    public bool InitializeMRec = false;
     public string MRecAdId_android = "";
     public string MRecAdId_ios = "";
+    public bool InitializeBanner = true;
     public string BannerAdId_android = "";
     public string BannerAdId_ios = "";
+    public bool ShowBannerOnStart = true;
 
 #if UNITY_IOS
     public string ApplovinMax_InterstitialUnitId { get => ApplovinMax_InterstitialUnitId_ios; }
