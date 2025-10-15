@@ -108,6 +108,9 @@ public class ProjectSetupUtility : EditorWindow
         AppLovinInternalSettings.Instance.UserTrackingUsageLocalizationEnabled = true;
 
         AppLovinSettings.Instance.SetAttributionReportEndpoint = true;
+        
+        AppLovinInternalSettings.Instance.Save();
+        AppLovinSettings.Instance.SaveAsync();
 
         EditorUtility.DisplayDialog("Project Setup", "Applovin is set up", "OK");
     }
