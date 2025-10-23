@@ -33,6 +33,8 @@ public class MonetizationManager : MonoBehaviour
             return;
         }
         
+        ABTestInitialization();
+
         m_MRecContent.gameObject.SetActive(false);
         m_MRecContent.anchoredPosition = Vector2.zero;
         m_CloseMRecButton.onClick?.AddListener(OnClickCloseMRec);
@@ -74,7 +76,6 @@ public class MonetizationManager : MonoBehaviour
 #if UNITY_IOS
         Device.RequestStoreReview();
 #endif
-        ABTestInitialization();
         ApplovinInititalization();
         MintegralROASInitialization();
     }
