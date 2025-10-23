@@ -103,7 +103,7 @@ public class MonetizationManager : MonoBehaviour
         
         if (AB == 0)
         {
-            AB = UnityEngine.Random.Range(0, 100) < 0 ? 1 : 2;
+            AB = UnityEngine.Random.Range(0, 100) < 50 ? 1 : 2;
         }
 
         Debug.Log("ab " + AB);
