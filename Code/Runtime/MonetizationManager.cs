@@ -74,6 +74,7 @@ public class MonetizationManager : MonoBehaviour
 #if UNITY_IOS
         Device.RequestStoreReview();
 #endif
+        ABTestInitialization();
         ApplovinInititalization();
         MintegralROASInitialization();
     }
@@ -93,26 +94,20 @@ public class MonetizationManager : MonoBehaviour
 
     #region AB Tests
 
-    /*
+    public int AB { get; private set; }
+    
     public void ABTestInitialization()
     {
-        if (PlayerPrefs.GetInt("ab", 0) == 0)
+        AB = PlayerPrefs.GetInt("ab", 0);
+        
+        if (AB == 0)
         {
-            if (UnityEngine.Random.Range(0, 100) < 0)
-            {
-                PlayerPrefs.SetInt("ab", 1);
-                MonetizationManager.Instance.ReportEvent("ab" + " " + "1");
-                Debug.Log("ab" + " " + "1");
-            }
-            else
-            {
-                PlayerPrefs.SetInt("ab", 2);
-                MonetizationManager.Instance.ReportEvent("ab" + " " + "2");
-                Debug.Log("ab" + " " + "2");
-            }
+            AB = UnityEngine.Random.Range(0, 100) < 0 ? 1 : 2;
         }
+
+        Debug.Log("ab " + AB);
+        PlayerPrefs.SetInt("ab", AB);
     }
-    */
 
     #endregion
 
@@ -487,7 +482,7 @@ public class MonetizationManager : MonoBehaviour
 
             Debug.Log("InterstitialReady");
             ReportEvent("InterstitialReady");
-            MaxSdk.ShowInterstitial(Keys.ApplovinMax_InterstitialUnitId, "version " + Application.version);
+            MaxSdk.ShowInterstitial(Keys.ApplovinMax_InterstitialUnitId, "version " + Application.version + " " + (AB == 1 ? "a" : "b"));
         }
 
         m_ShowInterstitialCoroutine = null;
