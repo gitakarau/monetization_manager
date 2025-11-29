@@ -1,22 +1,12 @@
 using System;
 using System.Collections;
 
-using TMPro;
-
 using UnityEngine;
 using UnityEngine.Events;
 #if UNITY_IOS
 using UnityEngine.iOS;
 #endif
 using UnityEngine.UI;
-
-
-
-
-
-
-
-
 
 public class MonetizationManager : MonoBehaviour
 {
