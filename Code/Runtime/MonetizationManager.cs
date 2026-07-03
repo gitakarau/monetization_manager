@@ -110,16 +110,17 @@ public class MonetizationManager : MonoBehaviour
     }
 
     string tenjinuserId;
+    BaseTenjin tenjinInstance;
 
     public void TenjinConnect()
     {
-        BaseTenjin instance = Tenjin.getInstance(Keys.Tenjin_API_KEY);
+        tenjinInstance = Tenjin.getInstance(Keys.Tenjin_API_KEY);
 #if UNITY_ANDROID
-        instance.SetAppStoreType(AppStoreType.googleplay);
+        tenjinInstance.SetAppStoreType(AppStoreType.googleplay);
 #endif
 
-        instance.SetCustomerUserId("user_id");
-        tenjinuserId = instance.GetCustomerUserId();
+        tenjinInstance.SetCustomerUserId("user_id");
+        tenjinuserId = tenjinInstance.GetCustomerUserId();
         /*
         if (instance.OptInOutUsingCMP())
         {
@@ -131,7 +132,7 @@ public class MonetizationManager : MonoBehaviour
         }
         */
         // Sends install/open event to Tenjin
-        instance.Connect();
+        tenjinInstance.Connect();
     }
 
 
@@ -182,6 +183,8 @@ public class MonetizationManager : MonoBehaviour
 
             // Show Mediation Debugger
             //MaxSdk.ShowMediationDebugger();
+            
+            tenjinInstance.SubscribeAppLovinImpressions();
         };
 
         MaxSdk.SetSdkKey(Keys.ApplovinMax_MaxSdkKey);
